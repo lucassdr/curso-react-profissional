@@ -54,13 +54,20 @@ body {
   outline: none;
 }
 .note__button--hiden {
-  visibility: hidden;
+  cursor: not-allowed;
+  color: #c2c2c2;
 }
 .note__button--edit {
-  color: #6bb1f3;
+  color: #494949;
 }
 .note__button--cancel {
-  color: #797979;
+  color: #494949;
+}
+.note__button--done {
+  color: #52ce86;
+}
+.note__button--delete {
+  color: #ff6868;
 }
 
 /*# sourceMappingURL=/my-app.e31bb0bc.css.map */

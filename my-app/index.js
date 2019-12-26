@@ -6,11 +6,7 @@ import './index.scss'
 
 class App extends React.Component {
 	state = {
-		notes: [
-			{ id: 1, text: 'Teste 1' },
-			{ id: 2, text: 'Teste 2' },
-			{ id: 3, text: 'Teste 3' }
-		]
+		notes: []
 	}
 
 	handleAddNote = text => {
@@ -143,29 +139,41 @@ class Note extends React.Component {
 				{isEditing ? (
 					<React.Fragment>
 						<button
-							className={'note__button'}
+							className={classNames(
+								'note__button',
+								'note__button--cancel'
+							)}
 							onClick={() => {
 								this.handleCancel()
 							}}>
 							<i className='material-icons'>cancel</i>
 						</button>
 						<button
-							className={'note__button'}
+							className={classNames(
+								'note__button',
+								'note__button--done'
+							)}
 							onClick={() => {
 								this.handleSave()
 							}}>
-							<i className='material-icons'>done</i>
+							<i className={'material-icons'}>done</i>
 						</button>
 					</React.Fragment>
 				) : (
 					<React.Fragment>
 						<button
-							className={'note__button'}
+							className={classNames(
+								'note__button',
+								'note__button--edit'
+							)}
 							onClick={this.handleEdit}>
 							<i className='material-icons'>edit</i>
 						</button>
 						<button
-							className={'note__button'}
+							className={classNames(
+								'note__button',
+								'note__button--delete'
+							)}
 							onClick={() => onDelete(note.id)}>
 							<i className='material-icons'>delete</i>
 						</button>

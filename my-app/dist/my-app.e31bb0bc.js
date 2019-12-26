@@ -32123,16 +32123,7 @@ function (_React$Component) {
     }
 
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
-      notes: [{
-        id: 1,
-        text: 'Teste 1'
-      }, {
-        id: 2,
-        text: 'Teste 2'
-      }, {
-        id: 3,
-        text: 'Teste 3'
-      }]
+      notes: []
     }, _this.handleAddNote = function (text) {
       _this.setState(function (prevState) {
         return {
@@ -32322,26 +32313,26 @@ function (_React$Component3) {
       }) : _react.default.createElement("span", {
         className: "note__text"
       }, note.text), isEditing ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
-        className: 'note__button',
+        className: (0, _classnames.default)('note__button', 'note__button--cancel'),
         onClick: function onClick() {
           _this5.handleCancel();
         }
       }, _react.default.createElement("i", {
         className: "material-icons"
       }, "cancel")), _react.default.createElement("button", {
-        className: 'note__button',
+        className: (0, _classnames.default)('note__button', 'note__button--done'),
         onClick: function onClick() {
           _this5.handleSave();
         }
       }, _react.default.createElement("i", {
-        className: "material-icons"
+        className: 'material-icons'
       }, "done"))) : _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
-        className: 'note__button',
+        className: (0, _classnames.default)('note__button', 'note__button--edit'),
         onClick: this.handleEdit
       }, _react.default.createElement("i", {
         className: "material-icons"
       }, "edit")), _react.default.createElement("button", {
-        className: 'note__button',
+        className: (0, _classnames.default)('note__button', 'note__button--delete'),
         onClick: function onClick() {
           return onDelete(note.id);
         }

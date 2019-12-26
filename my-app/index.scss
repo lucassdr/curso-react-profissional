@@ -57,15 +57,24 @@ body {
 		outline: none;
 
 		&--hiden {
-			visibility: hidden;
+			cursor: not-allowed;
+			color: #c2c2c2;
 		}
 
 		&--edit {
-			color: rgb(107, 177, 243);
+			color: #494949;
 		}
 
 		&--cancel {
-			color: rgb(121, 121, 121);
+			color: #494949;
+		}
+
+		&--done {
+			color: #52ce86;
+		}
+
+		&--delete {
+			color: #ff6868;
 		}
 	}
 }
