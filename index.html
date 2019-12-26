@@ -19,11 +19,23 @@
 		></script>
 		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 		<script type="text/babel">
-			function MyComponent() {
+			function MyComponentFunction() {
 				return <p>Meu componente</p>
 			}
 
-			ReactDOM.render(<MyComponent />, document.getElementById('root2'))
+			class MyComponentClass extends React.Component {
+				render() {
+					return <p>Meu segundo componente</p>
+				}
+			}
+
+			ReactDOM.render(
+				<>
+					<MyComponentFunction />
+					<MyComponentClass />
+				</>,
+				document.getElementById('root2')
+			)
 		</script>
 	</body>
 </html>
