@@ -22,7 +22,8 @@
 			class MyComponentClass extends React.Component {
 				state = {
 					counter: 0,
-					message: ''
+					name: '',
+					lastName: ''
 				}
 
 				handleClick = () => {
@@ -31,28 +32,51 @@
 					}))
 				}
 
-				handleChange = event => {
-					this.setState({ message: event.target.value })
+				handleChange = (key, value) => {
+					this.setState({ [key]: value })
 				}
 
 				render() {
+					let { name, lastName, counter } = this.state
 					return (
 						<div>
-							<p>Contador: {this.state.counter}</p>
+							<p>Contador: {counter}</p>
 							<button onClick={this.handleClick}>Contar</button>
 							<hr />
 							<div>
 								<input
 									type='text'
-									value={this.state.message}
-									onChange={this.handleChange}
+									value={name}
+									onChange={event => {
+										this.handleChange(
+											'name',
+											event.target.value
+										)
+									}}
 								/>
 								<input
 									type='text'
-									value={this.state.message}
-									onChange={this.handleChange}
+									value={lastName}
+									onChange={event => {
+										this.handleChange(
+											'lastName',
+											event.target.value
+										)
+									}}
 								/>
-								<p>{this.state.message}</p>
+								<p>
+									{lastName}
+									{name && lastName && ', '} {name}
+								</p>
+								<button
+									onClick={() => {
+										this.setState({
+											name: 'Lucas',
+											lastName: 'Sodré'
+										})
+									}}>
+									Alterar nome
+								</button>
 							</div>
 						</div>
 					)
