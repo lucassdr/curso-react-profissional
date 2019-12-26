@@ -25,7 +25,9 @@
 				}
 
 				handleClick = () => {
-					this.setState({ counter: 1 })
+					this.setState(prevState => ({
+						counter: this.state.counter + 1
+					}))
 				}
 
 				render() {
