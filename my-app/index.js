@@ -1,20 +1,20 @@
 import classNames from 'classnames'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import uuid from 'uuid'
 import './index.scss'
 
 class App extends React.Component {
 	state = {
-		notes: [
-			{ id: 1, text: 'texto1' },
-			{ id: 2, text: 'texto2' },
-			{ id: 3, text: 'texto3' }
-		]
+		notes: []
 	}
 
 	handleAddNote = text => {
 		this.setState(prevState => ({
-			notes: prevState.notes.concat(text)
+			notes: prevState.notes.concat({
+				id: uuid(),
+				text
+			})
 		}))
 	}
 
