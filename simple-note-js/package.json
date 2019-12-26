@@ -1,0 +1,25 @@
+{
+	"name": "simple-note.js",
+	"version": "2.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "parcel src/index.html"
+	},
+	"author": "Lucas Sodré",
+	"license": "ISC",
+	"dependencies": {
+		"classnames": "^2.2.6",
+		"react": "^16.12.0",
+		"react-dom": "^16.12.0",
+		"uuid": "^3.3.3"
+	},
+	"devDependencies": {
+		"babel-core": "^6.26.3",
+		"babel-plugin-transform-class-properties": "^6.24.1",
+		"babel-preset-env": "^1.7.0",
+		"babel-preset-react": "^6.24.1",
+		"parcel-bundler": "^1.12.4",
+		"sass": "^1.24.0"
+	}
+}
