@@ -23,15 +23,36 @@ body {
 	right: 0;
 
 	&__container {
+		display: flex;
+		align-items: center;
 		margin: 0 auto;
 		padding: 12px $app-padding;
 		max-width: $container-max-width;
+	}
+
+	&__brand {
+		flex: 1;
+		font-size: $font-size;
+	}
+
+	&__action {
+		margin-right: 10px;
+		margin-left: 10px;
+		background-color: transparent;
+		color: #ffffff;
+		border: none;
+		outline: none;
+
+		&:hover {
+			color: rgba(0, 0, 0, 0.5);
+			cursor: pointer;
+		}
 	}
 }
 
 .container {
 	margin: 0 auto;
-	padding: 20% $app-padding;
+	padding: 80px $app-padding;
 	max-width: $container-max-width;
 }
 

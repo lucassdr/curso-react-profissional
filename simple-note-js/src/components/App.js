@@ -64,10 +64,20 @@ class App extends React.Component {
 		})
 	}
 
+	handleReload = () => {
+		const notes = window.localStorage.getItem('notes')
+		this.setState({ notes: JSON.parse(notes) })
+	}
+
+	handleSave = () => {
+		const { notes } = this.state
+		window.localStorage.setItem('notes', JSON.stringify(notes))
+	}
+
 	render() {
 		return (
 			<div>
-				<AppBar />
+				<AppBar onReload={this.handleReload} onSave={this.handleSave} />
 				<div className='container'>
 					<NewNote onAddNote={this.handleAddNote} />
 					<NoteList

@@ -18,14 +18,32 @@ body {
   right: 0;
 }
 .app-bar__container {
+  display: flex;
+  align-items: center;
   margin: 0 auto;
   padding: 12px 20px;
   max-width: 600px;
 }
+.app-bar__brand {
+  flex: 1;
+  font-size: 25px;
+}
+.app-bar__action {
+  margin-right: 10px;
+  margin-left: 10px;
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+  outline: none;
+}
+.app-bar__action:hover {
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
 
 .container {
   margin: 0 auto;
-  padding: 20% 20px;
+  padding: 80px 20px;
   max-width: 600px;
 }
 
