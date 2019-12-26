@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Olá Mundo!</title>
+	</head>
+	<body>
+		<div id="root"></div>
+		<div id="root2"></div>
+		<script
+			crossorigin
+			src="https://unpkg.com/react@16/umd/react.development.js"
+		></script>
+		<script
+			crossorigin
+			src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+		></script>
+		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+		<script type="text/babel">
+			ReactDOM.render(
+				<h1>
+					Olá Mundo do Babel
+					<br />
+					<small style={{ color: 'blue' }}>Por Lucas Sodré</small>
+				</h1>,
+				document.getElementById('root2')
+			)
+		</script>
+	</body>
+</html>
