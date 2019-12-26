@@ -19,14 +19,11 @@
 		></script>
 		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 		<script type="text/babel">
-			ReactDOM.render(
-				<h1>
-					Olá Mundo do Babel
-					<br />
-					<small style={{ color: 'blue' }}>Por Lucas Sodré</small>
-				</h1>,
-				document.getElementById('root2')
-			)
+			function MyComponent() {
+				return <p>Meu componente</p>
+			}
+
+			ReactDOM.render(<MyComponent />, document.getElementById('root2'))
 		</script>
 	</body>
 </html>
