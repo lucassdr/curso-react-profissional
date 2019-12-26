@@ -32123,7 +32123,16 @@ function (_React$Component) {
     }
 
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
-      notes: []
+      notes: [{
+        id: 1,
+        text: 'Teste 1'
+      }, {
+        id: 2,
+        text: 'Teste 2'
+      }, {
+        id: 3,
+        text: 'Teste 3'
+      }]
     }, _this.handleAddNote = function (text) {
       _this.setState(function (prevState) {
         return {
@@ -32148,6 +32157,17 @@ function (_React$Component) {
           notes: newNotes
         };
       });
+    }, _this.handleDelete = function (id) {
+      _this.setState(function (prevState) {
+        var newNotes = prevState.notes.slice();
+        var index = newNotes.findIndex(function (note) {
+          return note.id === id;
+        });
+        newNotes.splice(index, 1)[0];
+        return {
+          notes: newNotes
+        };
+      });
     }, _temp));
   }
 
@@ -32160,7 +32180,8 @@ function (_React$Component) {
         onAddNote: this.handleAddNote
       }), _react.default.createElement(NoteList, {
         notes: this.state.notes,
-        onMove: this.handleMove
+        onMove: this.handleMove,
+        onDelete: this.handleDelete
       }));
     }
   }]);
@@ -32228,7 +32249,8 @@ function (_React$Component2) {
 
 var NoteList = function NoteList(_ref) {
   var notes = _ref.notes,
-      onMove = _ref.onMove;
+      onMove = _ref.onMove,
+      onDelete = _ref.onDelete;
   return _react.default.createElement("div", {
     className: "note-list"
   }, notes.map(function (note, index) {
@@ -32238,6 +32260,13 @@ var NoteList = function NoteList(_ref) {
     }, _react.default.createElement("span", {
       className: "note__text"
     }, note.text), _react.default.createElement("button", {
+      className: 'note__button',
+      onClick: function onClick() {
+        return onDelete(note.id);
+      }
+    }, _react.default.createElement("i", {
+      className: "material-icons"
+    }, "delete")), _react.default.createElement("button", {
       className: (0, _classnames.default)('note__button', {
         'note__button--hiden': index == 0
       }),
