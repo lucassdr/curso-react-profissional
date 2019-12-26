@@ -30,10 +30,23 @@ body {
 }
 
 .note {
+  display: flex;
+  align-items: center;
   margin-bottom: 20px;
   background-color: #ffffff;
   padding: 10px 12px;
   border-radius: 2px;
+}
+.note__text {
+  flex: 1;
+}
+.note__button {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.note__button--hiden {
+  visibility: hidden;
 }
 
 /*# sourceMappingURL=/my-app.e31bb0bc.css.map */

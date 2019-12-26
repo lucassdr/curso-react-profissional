@@ -117,7 +117,62 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/object-assign/index.js":[function(require,module,exports) {
+})({"node_modules/classnames/index.js":[function(require,module,exports) {
+var define;
+/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+		// register as 'classnames', consistent with npm package name
+		define('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+},{}],"node_modules/object-assign/index.js":[function(require,module,exports) {
 /*
 object-assign
 (c) Sindre Sorhus
@@ -31805,6 +31860,8 @@ module.hot.accept(reloadCSS);
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
+var _classnames = _interopRequireDefault(require("classnames"));
+
 var _react = _interopRequireDefault(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
@@ -31850,11 +31907,35 @@ function (_React$Component) {
     }
 
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
-      notes: []
+      notes: [{
+        id: 1,
+        text: 'texto1'
+      }, {
+        id: 2,
+        text: 'texto2'
+      }, {
+        id: 3,
+        text: 'texto3'
+      }]
     }, _this.handleAddNote = function (text) {
       _this.setState(function (prevState) {
         return {
           notes: prevState.notes.concat(text)
+        };
+      });
+    }, _this.handleMove = function (direction, index) {
+      _this.setState(function (prevState) {
+        var newNotes = prevState.notes.slice();
+        var removedNote = newNotes.splice(index, 1)[0];
+
+        if (direction === 'up') {
+          newNotes.splice(index - 1, 0, removedNote);
+        } else if (direction === 'down') {
+          newNotes.splice(index + 1, 0, removedNote);
+        }
+
+        return {
+          notes: newNotes
         };
       });
     }, _temp));
@@ -31868,7 +31949,8 @@ function (_React$Component) {
       }, _react.default.createElement(NewNote, {
         onAddNote: this.handleAddNote
       }), _react.default.createElement(NoteList, {
-        notes: this.state.notes
+        notes: this.state.notes,
+        onMove: this.handleMove
       }));
     }
   }]);
@@ -31935,18 +32017,40 @@ function (_React$Component2) {
 }(_react.default.Component);
 
 var NoteList = function NoteList(_ref) {
-  var notes = _ref.notes;
+  var notes = _ref.notes,
+      onMove = _ref.onMove;
   return _react.default.createElement("div", {
     className: "note-list"
-  }, notes.map(function (note) {
+  }, notes.map(function (note, index) {
     return _react.default.createElement("div", {
-      className: "note"
-    }, note);
+      className: "note",
+      key: note.id
+    }, _react.default.createElement("span", {
+      className: "note__text"
+    }, note.text), _react.default.createElement("button", {
+      className: (0, _classnames.default)('note__button', {
+        'note__button--hiden': index == 0
+      }),
+      onClick: function onClick() {
+        return onMove('up', index);
+      }
+    }, _react.default.createElement("i", {
+      className: "material-icons"
+    }, "arrow_upward")), _react.default.createElement("button", {
+      className: (0, _classnames.default)('note__button', {
+        'note__button--hiden': index == notes.length - 1
+      }),
+      onClick: function onClick() {
+        return onMove('down', index);
+      }
+    }, _react.default.createElement("i", {
+      className: "material-icons"
+    }, "arrow_downward")));
   }));
 };
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById('root'));
-},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","./index.scss":"index.scss"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"classnames":"node_modules/classnames/index.js","react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","./index.scss":"index.scss"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -31974,7 +32078,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65495" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56466" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
