@@ -2,7 +2,7 @@ import React from 'react'
 
 const AppBar = () => (
 	<div className={'app-bar'}>
-		<div className={'container'}>note.js</div>
+		<div className={'app-bar__container'}>simple note.js</div>
 	</div>
 )
 

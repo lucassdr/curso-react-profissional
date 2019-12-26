@@ -31919,8 +31919,8 @@ var AppBar = function AppBar() {
   return _react.default.createElement("div", {
     className: 'app-bar'
   }, _react.default.createElement("div", {
-    className: 'container'
-  }, "note.js"));
+    className: 'app-bar__container'
+  }, "simple note.js"));
 };
 
 var _default = AppBar;
@@ -32498,7 +32498,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59937" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62874" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

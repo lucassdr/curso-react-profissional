@@ -5,13 +5,17 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Bebas Neue", cursive;
-  font-size: 35px;
+  font-size: 25px;
 }
 
 .app-bar {
   background-color: #6cc4b8;
   font-family: "Courgette", cursive;
-  font-size: 52.5px;
+  font-size: 12.5px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 .app-bar__container {
   margin: 0 auto;
@@ -21,7 +25,7 @@ body {
 
 .container {
   margin: 0 auto;
-  padding: 20px;
+  padding: 20% 20px;
   max-width: 600px;
 }
 
@@ -34,7 +38,7 @@ body {
   width: 100%;
   border: none;
   outline: none;
-  font-size: 35px;
+  font-size: 25px;
 }
 
 .note-list {
@@ -55,7 +59,7 @@ body {
 .note__input {
   flex: 1;
   border: 0;
-  font-size: 35px;
+  font-size: 25px;
   border-bottom: 1px solid #c7c7c7;
   outline: none;
 }
