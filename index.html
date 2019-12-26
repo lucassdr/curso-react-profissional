@@ -44,6 +44,12 @@
 							<div>
 								<input
 									type='text'
+									value={this.state.message}
+									onChange={this.handleChange}
+								/>
+								<input
+									type='text'
+									value={this.state.message}
 									onChange={this.handleChange}
 								/>
 								<p>{this.state.message}</p>
