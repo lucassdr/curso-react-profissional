@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css?family=Courgette&display=swap');
+
+body {
+	background-color: #c4c4c4;
+	margin: 0;
+	padding: 0;
+	font-family: 'Courgette', cursive;
+	font-size: 25px;
+}
+.container {
+	margin: 0 auto;
+	padding: 20px;
+	max-width: 600px;
+}
+
+.new-note {
+	background-color: #ffffff;
+	padding: 10px 12px;
+	border-radius: 2px;
+
+	&__input {
+		width: 100%;
+		border: none;
+		outline: none;
+		font-size: 30px;
+	}
+}
+
+.note-list {
+	margin: 40px 0px;
+}
+
+.note {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+	background-color: #ffffff;
+	padding: 10px 12px;
+	border-radius: 2px;
+
+	&__text {
+		flex: 1;
+	}
+
+	&__input {
+		flex: 1;
+		border: 0;
+		font-size: 25px;
+		border-bottom: 1px solid #c7c7c7;
+		outline: none;
+	}
+
+	&__button {
+		background-color: transparent;
+		border: 0;
+		cursor: pointer;
+		outline: none;
+
+		&--hiden {
+			cursor: not-allowed;
+			color: #c2c2c2;
+		}
+
+		&--edit {
+			color: #494949;
+		}
+
+		&--cancel {
+			color: #494949;
+		}
+
+		&--done {
+			color: #52ce86;
+		}
+
+		&--delete {
+			color: #ff6868;
+		}
+	}
+}
