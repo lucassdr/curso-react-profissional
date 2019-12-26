@@ -21,7 +21,8 @@
 		<script type="text/babel">
 			class MyComponentClass extends React.Component {
 				state = {
-					counter: 0
+					counter: 0,
+					message: ''
 				}
 
 				handleClick = () => {
@@ -30,11 +31,23 @@
 					}))
 				}
 
+				handleChange = event => {
+					this.setState({ message: event.target.value })
+				}
+
 				render() {
 					return (
 						<div>
 							<p>Contador: {this.state.counter}</p>
 							<button onClick={this.handleClick}>Contar</button>
+							<hr />
+							<div>
+								<input
+									type='text'
+									onChange={this.handleChange}
+								/>
+								<p>{this.state.message}</p>
+							</div>
 						</div>
 					)
 				}
