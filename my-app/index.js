@@ -51,6 +51,18 @@ class App extends React.Component {
 		})
 	}
 
+	handleEdit = (id, text) => {
+		this.setState(prevState => {
+			const newNotes = prevState.notes.slice()
+			const index = newNotes.findIndex(note => note.id === id)
+			newNotes[index].text = text
+
+			return {
+				notes: newNotes
+			}
+		})
+	}
+
 	render() {
 		return (
 			<div className='container'>
@@ -59,6 +71,7 @@ class App extends React.Component {
 					notes={this.state.notes}
 					onMove={this.handleMove}
 					onDelete={this.handleDelete}
+					onEdit={this.handleEdit}
 				/>
 			</div>
 		)
@@ -94,31 +107,101 @@ class NewNote extends React.Component {
 	}
 }
 
-const NoteList = ({ notes, onMove, onDelete }) => (
+class Note extends React.Component {
+	state = {
+		isEditing: false
+	}
+
+	handleEdit = () => {
+		this.setState({ isEditing: true })
+	}
+
+	handleCancel = () => {
+		this.setState({ isEditing: false })
+	}
+
+	handleSave = () => {
+		this.props.onEdit(this.props.note.id, this.input.value)
+		this.setState({ isEditing: false })
+	}
+
+	render() {
+		const { note, onEdit, onDelete, onMove, index, total } = this.props
+		let { isEditing } = this.state
+		return (
+			<div className='note' key={note.id}>
+				{isEditing ? (
+					<input
+						type='text'
+						className='note__input'
+						defaultValue={note.text}
+						ref={c => (this.input = c)}
+					/>
+				) : (
+					<span className='note__text'>{note.text}</span>
+				)}
+				{isEditing ? (
+					<React.Fragment>
+						<button
+							className={'note__button'}
+							onClick={() => {
+								this.handleCancel()
+							}}>
+							<i className='material-icons'>cancel</i>
+						</button>
+						<button
+							className={'note__button'}
+							onClick={() => {
+								this.handleSave()
+							}}>
+							<i className='material-icons'>done</i>
+						</button>
+					</React.Fragment>
+				) : (
+					<React.Fragment>
+						<button
+							className={'note__button'}
+							onClick={this.handleEdit}>
+							<i className='material-icons'>edit</i>
+						</button>
+						<button
+							className={'note__button'}
+							onClick={() => onDelete(note.id)}>
+							<i className='material-icons'>delete</i>
+						</button>
+						<button
+							className={classNames('note__button', {
+								'note__button--hiden': index == 0
+							})}
+							onClick={() => onMove('up', index)}>
+							<i className='material-icons'>arrow_upward</i>
+						</button>
+						<button
+							className={classNames('note__button', {
+								'note__button--hiden': index == total - 1
+							})}
+							onClick={() => onMove('down', index)}>
+							<i className='material-icons'>arrow_downward</i>
+						</button>
+					</React.Fragment>
+				)}
+			</div>
+		)
+	}
+}
+
+const NoteList = ({ notes, onMove, onDelete, onEdit }) => (
 	<div className='note-list'>
 		{notes.map((note, index) => (
-			<div className='note' key={note.id}>
-				<span className='note__text'>{note.text}</span>
-				<button
-					className={'note__button'}
-					onClick={() => onDelete(note.id)}>
-					<i className='material-icons'>delete</i>
-				</button>
-				<button
-					className={classNames('note__button', {
-						'note__button--hiden': index == 0
-					})}
-					onClick={() => onMove('up', index)}>
-					<i className='material-icons'>arrow_upward</i>
-				</button>
-				<button
-					className={classNames('note__button', {
-						'note__button--hiden': index == notes.length - 1
-					})}
-					onClick={() => onMove('down', index)}>
-					<i className='material-icons'>arrow_downward</i>
-				</button>
-			</div>
+			<Note
+				key={note.id}
+				note={note}
+				onEdit={onEdit}
+				onDelete={onDelete}
+				onMove={onMove}
+				index={index}
+				total={notes.length}
+			/>
 		))}
 	</div>
 )

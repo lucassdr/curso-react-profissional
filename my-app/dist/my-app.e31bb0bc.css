@@ -40,13 +40,27 @@ body {
 .note__text {
   flex: 1;
 }
+.note__input {
+  flex: 1;
+  border: 0;
+  font-size: 25px;
+  border-bottom: 1px solid #c7c7c7;
+  outline: none;
+}
 .note__button {
   background-color: transparent;
   border: 0;
   cursor: pointer;
+  outline: none;
 }
 .note__button--hiden {
   visibility: hidden;
+}
+.note__button--edit {
+  color: #6bb1f3;
+}
+.note__button--cancel {
+  color: #797979;
 }
 
 /*# sourceMappingURL=/my-app.e31bb0bc.css.map */

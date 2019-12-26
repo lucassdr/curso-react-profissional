@@ -42,13 +42,30 @@ body {
 		flex: 1;
 	}
 
+	&__input {
+		flex: 1;
+		border: 0;
+		font-size: 25px;
+		border-bottom: 1px solid #c7c7c7;
+		outline: none;
+	}
+
 	&__button {
 		background-color: transparent;
 		border: 0;
 		cursor: pointer;
+		outline: none;
 
 		&--hiden {
 			visibility: hidden;
+		}
+
+		&--edit {
+			color: rgb(107, 177, 243);
+		}
+
+		&--cancel {
+			color: rgb(121, 121, 121);
 		}
 	}
 }
