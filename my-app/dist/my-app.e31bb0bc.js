@@ -32305,8 +32305,7 @@ function (_React$Component3) {
           total = _this$props.total;
       var isEditing = this.state.isEditing;
       return _react.default.createElement("div", {
-        className: "note",
-        key: note.id
+        className: "note"
       }, isEditing ? _react.default.createElement("input", {
         type: "text",
         className: "note__input",
