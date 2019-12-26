@@ -1,10 +1,22 @@
 @import url("https://fonts.googleapis.com/css?family=Courgette&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap");
 body {
   background-color: #c4c4c4;
   margin: 0;
   padding: 0;
+  font-family: "Bebas Neue", cursive;
+  font-size: 35px;
+}
+
+.app-bar {
+  background-color: #ffffff;
   font-family: "Courgette", cursive;
-  font-size: 25px;
+  font-size: 52.5px;
+}
+.app-bar__container {
+  margin: 0 auto;
+  padding: 12px 20px;
+  max-width: 600px;
 }
 
 .container {
@@ -22,7 +34,7 @@ body {
   width: 100%;
   border: none;
   outline: none;
-  font-size: 30px;
+  font-size: 35px;
 }
 
 .note-list {
@@ -43,7 +55,7 @@ body {
 .note__input {
   flex: 1;
   border: 0;
-  font-size: 25px;
+  font-size: 35px;
   border-bottom: 1px solid #c7c7c7;
   outline: none;
 }

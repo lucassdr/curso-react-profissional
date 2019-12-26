@@ -1,5 +1,6 @@
 import React from 'react'
 import uuid from 'uuid/v1'
+import AppBar from './AppBar'
 import NewNote from './NewNote'
 import NoteList from './NoteList'
 
@@ -65,14 +66,17 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div className='container'>
-				<NewNote onAddNote={this.handleAddNote} />
-				<NoteList
-					notes={this.state.notes}
-					onMove={this.handleMove}
-					onDelete={this.handleDelete}
-					onEdit={this.handleEdit}
-				/>
+			<div>
+				<AppBar />
+				<div className='container'>
+					<NewNote onAddNote={this.handleAddNote} />
+					<NoteList
+						notes={this.state.notes}
+						onMove={this.handleMove}
+						onDelete={this.handleDelete}
+						onEdit={this.handleEdit}
+					/>
+				</div>
 			</div>
 		)
 	}

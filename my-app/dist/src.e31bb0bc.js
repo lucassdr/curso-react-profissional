@@ -31903,7 +31903,29 @@ function v1(options, buf, offset) {
 
 module.exports = v1;
 
-},{"./lib/rng":"../node_modules/uuid/lib/rng-browser.js","./lib/bytesToUuid":"../node_modules/uuid/lib/bytesToUuid.js"}],"components/NewNote.js":[function(require,module,exports) {
+},{"./lib/rng":"../node_modules/uuid/lib/rng-browser.js","./lib/bytesToUuid":"../node_modules/uuid/lib/bytesToUuid.js"}],"components/AppBar.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var AppBar = function AppBar() {
+  return _react.default.createElement("div", {
+    className: 'app-bar'
+  }, _react.default.createElement("div", {
+    className: 'container'
+  }, "note.js"));
+};
+
+var _default = AppBar;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"components/NewNote.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32242,6 +32264,8 @@ var _react = _interopRequireDefault(require("react"));
 
 var _v = _interopRequireDefault(require("uuid/v1"));
 
+var _AppBar = _interopRequireDefault(require("./AppBar"));
+
 var _NewNote = _interopRequireDefault(require("./NewNote"));
 
 var _NoteList = _interopRequireDefault(require("./NoteList"));
@@ -32342,7 +32366,7 @@ function (_React$Component) {
   _createClass(App, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", {
+      return _react.default.createElement("div", null, _react.default.createElement(_AppBar.default, null), _react.default.createElement("div", {
         className: "container"
       }, _react.default.createElement(_NewNote.default, {
         onAddNote: this.handleAddNote
@@ -32351,7 +32375,7 @@ function (_React$Component) {
         onMove: this.handleMove,
         onDelete: this.handleDelete,
         onEdit: this.handleEdit
-      }));
+      })));
     }
   }]);
 
@@ -32360,7 +32384,7 @@ function (_React$Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","uuid/v1":"../node_modules/uuid/v1.js","./NewNote":"components/NewNote.js","./NoteList":"components/NoteList.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","uuid/v1":"../node_modules/uuid/v1.js","./AppBar":"components/AppBar.js","./NewNote":"components/NewNote.js","./NoteList":"components/NoteList.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
