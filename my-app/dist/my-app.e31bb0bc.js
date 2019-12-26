@@ -31813,31 +31813,136 @@ require("./index.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var App = function App() {
-  return _react.default.createElement("div", {
-    className: "container"
-  }, _react.default.createElement(NewNote, null), _react.default.createElement(NoteList, null));
-};
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-var NewNote = function NewNote() {
-  return _react.default.createElement("div", {
-    className: 'new-note'
-  }, _react.default.createElement("input", {
-    type: "text",
-    className: 'new-note__input'
-  }));
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var NoteList = function NoteList() {
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    var _temp;
+
+    _classCallCheck(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+      notes: []
+    }, _this.handleAddNote = function (text) {
+      _this.setState(function (prevState) {
+        return {
+          notes: prevState.notes.concat(text)
+        };
+      });
+    }, _temp));
+  }
+
+  _createClass(App, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement(NewNote, {
+        onAddNote: this.handleAddNote
+      }), _react.default.createElement(NoteList, {
+        notes: this.state.notes
+      }));
+    }
+  }]);
+
+  return App;
+}(_react.default.Component);
+
+var NewNote =
+/*#__PURE__*/
+function (_React$Component2) {
+  _inherits(NewNote, _React$Component2);
+
+  function NewNote() {
+    var _getPrototypeOf3;
+
+    var _this2;
+
+    var _temp2;
+
+    _classCallCheck(this, NewNote);
+
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return _possibleConstructorReturn(_this2, (_temp2 = _this2 = _possibleConstructorReturn(this, (_getPrototypeOf3 = _getPrototypeOf(NewNote)).call.apply(_getPrototypeOf3, [this].concat(args))), _this2.state = {
+      text: ''
+    }, _temp2));
+  }
+
+  _createClass(NewNote, [{
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var onAddNote = this.props.onAddNote;
+      var text = this.state.text;
+      return _react.default.createElement("div", {
+        className: 'new-note'
+      }, _react.default.createElement("input", {
+        type: "text",
+        className: 'new-note__input',
+        placeholder: 'Digite sua nota aqui...',
+        value: text,
+        onChange: function onChange(event) {
+          _this3.setState({
+            text: event.target.value
+          });
+        },
+        onKeyPress: function onKeyPress(event) {
+          if (event.key === 'Enter') {
+            onAddNote(event.target.value);
+
+            _this3.setState({
+              text: ''
+            });
+          }
+        }
+      }));
+    }
+  }]);
+
+  return NewNote;
+}(_react.default.Component);
+
+var NoteList = function NoteList(_ref) {
+  var notes = _ref.notes;
   return _react.default.createElement("div", {
     className: "note-list"
-  }, _react.default.createElement("div", {
-    className: "note"
-  }, "TESTE 1"), _react.default.createElement("div", {
-    className: "note"
-  }, "TESTE 2"), _react.default.createElement("div", {
-    className: "note"
-  }, "TESTE 3"));
+  }, notes.map(function (note) {
+    return _react.default.createElement("div", {
+      className: "note"
+    }, note);
+  }));
 };
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById('root'));
@@ -31869,7 +31974,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63123" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65495" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -13,6 +13,13 @@ body {
 	background-color: #ffffff;
 	padding: 10px 12px;
 	border-radius: 2px;
+
+	&__input {
+		width: 100%;
+		border: none;
+		outline: none;
+		font-size: 20px;
+	}
 }
 
 .note-list {
