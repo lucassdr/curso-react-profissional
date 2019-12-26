@@ -35,16 +35,23 @@ class App extends React.Component {
 		})
 	}
 
-	handleDelete = id => {
-		this.setState(prevState => {
-			const newNotes = prevState.notes.slice()
-			const index = newNotes.findIndex(note => note.id === id)
-			newNotes.splice(index, 1)[0]
+	handleDelete = note => {
+		let confirmDelete = confirm(
+			`Você deseja remover a nota "${note.text}"?`
+		)
+		if (confirmDelete) {
+			console.log('IF', confirmDelete)
 
-			return {
-				notes: newNotes
-			}
-		})
+			this.setState(prevState => {
+				const newNotes = prevState.notes.slice()
+				const index = newNotes.findIndex(note => note.id === note.id)
+				newNotes.splice(index, 1)[0]
+
+				return {
+					notes: newNotes
+				}
+			})
+		}
 	}
 
 	handleEdit = (id, text) => {
@@ -174,7 +181,7 @@ class Note extends React.Component {
 								'note__button',
 								'note__button--delete'
 							)}
-							onClick={() => onDelete(note.id)}>
+							onClick={() => onDelete(note)}>
 							<i className='material-icons'>delete</i>
 						</button>
 						<button

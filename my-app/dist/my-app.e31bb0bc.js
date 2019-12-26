@@ -32148,17 +32148,23 @@ function (_React$Component) {
           notes: newNotes
         };
       });
-    }, _this.handleDelete = function (id) {
-      _this.setState(function (prevState) {
-        var newNotes = prevState.notes.slice();
-        var index = newNotes.findIndex(function (note) {
-          return note.id === id;
+    }, _this.handleDelete = function (note) {
+      var confirmDelete = confirm("Voc\xEA deseja remover a nota \"".concat(note.text, "\"?"));
+
+      if (confirmDelete) {
+        console.log('IF', confirmDelete);
+
+        _this.setState(function (prevState) {
+          var newNotes = prevState.notes.slice();
+          var index = newNotes.findIndex(function (note) {
+            return note.id === note.id;
+          });
+          newNotes.splice(index, 1)[0];
+          return {
+            notes: newNotes
+          };
         });
-        newNotes.splice(index, 1)[0];
-        return {
-          notes: newNotes
-        };
-      });
+      }
     }, _this.handleEdit = function (id, text) {
       _this.setState(function (prevState) {
         var newNotes = prevState.notes.slice();
@@ -32334,7 +32340,7 @@ function (_React$Component3) {
       }, "edit")), _react.default.createElement("button", {
         className: (0, _classnames.default)('note__button', 'note__button--delete'),
         onClick: function onClick() {
-          return onDelete(note.id);
+          return onDelete(note);
         }
       }, _react.default.createElement("i", {
         className: "material-icons"
