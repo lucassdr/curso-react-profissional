@@ -15,12 +15,11 @@ class App extends React.Component {
 	}
 
 	handleAddNote = text => {
-		this.setState(prevState => ({
-			notes: prevState.notes.concat({
-				id: uuid(),
-				text
-			})
-		}))
+		this.setState(prevState => {
+			const notes = prevState.notes.concat({ id: uuid(), text })
+			this.handleSave(notes)
+			return { notes }
+		})
 	}
 
 	handleMove = (direction, index) => {
@@ -33,6 +32,8 @@ class App extends React.Component {
 			} else if (direction === 'down') {
 				newNotes.splice(index + 1, 0, removedNote)
 			}
+
+			this.handleSave(newNotes)
 
 			return {
 				notes: newNotes
@@ -50,6 +51,7 @@ class App extends React.Component {
 				const index = newNotes.findIndex(note => note.id === note.id)
 				newNotes.splice(index, 1)[0]
 
+				this.handleSave(newNotes)
 				return {
 					notes: newNotes
 				}
@@ -62,7 +64,7 @@ class App extends React.Component {
 			const newNotes = prevState.notes.slice()
 			const index = newNotes.findIndex(note => note.id === id)
 			newNotes[index].text = text
-
+			this.handleSave(newNotes)
 			return {
 				notes: newNotes
 			}
@@ -77,16 +79,19 @@ class App extends React.Component {
 		}, 3000)
 	}
 
-	handleSave = () => {
-		const { notes } = this.state
-		window.localStorage.setItem('notes', JSON.stringify(notes))
+	handleSave = notes => {
+		this.setState({ isLoading: true })
+		setTimeout(() => {
+			window.localStorage.setItem('notes', JSON.stringify(notes))
+			this.setState({ isLoading: false })
+		}, 3000)
 	}
 
 	render() {
 		let { isLoading } = this.state
 		return (
 			<div>
-				<AppBar onSave={this.handleSave} isLoading={isLoading} />
+				<AppBar isLoading={isLoading} />
 				<div className='container'>
 					<NewNote onAddNote={this.handleAddNote} />
 					<NoteList

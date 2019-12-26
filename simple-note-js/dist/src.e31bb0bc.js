@@ -31916,8 +31916,7 @@ var _react = _interopRequireDefault(require("react"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AppBar = function AppBar(_ref) {
-  var onSave = _ref.onSave,
-      isLoading = _ref.isLoading;
+  var isLoading = _ref.isLoading;
   return _react.default.createElement("div", {
     className: 'app-bar'
   }, _react.default.createElement("div", {
@@ -31928,12 +31927,7 @@ var AppBar = function AppBar(_ref) {
     className: "app-bar__action app-bar__action--rotation"
   }, _react.default.createElement("i", {
     className: "material-icons"
-  }, "refresh")), _react.default.createElement("button", {
-    className: "app-bar__action",
-    onClick: onSave
-  }, _react.default.createElement("i", {
-    className: "material-icons"
-  }, "save"))) : ''));
+  }, "refresh"))) : ''));
 };
 
 var _default = AppBar;
@@ -32326,11 +32320,15 @@ function (_React$Component) {
       isLoading: false
     }, _this.handleAddNote = function (text) {
       _this.setState(function (prevState) {
+        var notes = prevState.notes.concat({
+          id: (0, _v.default)(),
+          text: text
+        });
+
+        _this.handleSave(notes);
+
         return {
-          notes: prevState.notes.concat({
-            id: (0, _v.default)(),
-            text: text
-          })
+          notes: notes
         };
       });
     }, _this.handleMove = function (direction, index) {
@@ -32343,6 +32341,8 @@ function (_React$Component) {
         } else if (direction === 'down') {
           newNotes.splice(index + 1, 0, removedNote);
         }
+
+        _this.handleSave(newNotes);
 
         return {
           notes: newNotes
@@ -32358,6 +32358,9 @@ function (_React$Component) {
             return note.id === note.id;
           });
           newNotes.splice(index, 1)[0];
+
+          _this.handleSave(newNotes);
+
           return {
             notes: newNotes
           };
@@ -32370,6 +32373,9 @@ function (_React$Component) {
           return note.id === id;
         });
         newNotes[index].text = text;
+
+        _this.handleSave(newNotes);
+
         return {
           notes: newNotes
         };
@@ -32386,9 +32392,18 @@ function (_React$Component) {
           isLoading: false
         });
       }, 3000);
-    }, _this.handleSave = function () {
-      var notes = _this.state.notes;
-      window.localStorage.setItem('notes', JSON.stringify(notes));
+    }, _this.handleSave = function (notes) {
+      _this.setState({
+        isLoading: true
+      });
+
+      setTimeout(function () {
+        window.localStorage.setItem('notes', JSON.stringify(notes));
+
+        _this.setState({
+          isLoading: false
+        });
+      }, 3000);
     }, _temp));
   }
 
@@ -32402,7 +32417,6 @@ function (_React$Component) {
     value: function render() {
       var isLoading = this.state.isLoading;
       return _react.default.createElement("div", null, _react.default.createElement(_AppBar.default, {
-        onSave: this.handleSave,
         isLoading: isLoading
       }), _react.default.createElement("div", {
         className: "container"
