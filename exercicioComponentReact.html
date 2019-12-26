@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>React</title>
+	</head>
+
+	<body>
+		<div id="root"></div>
+
+		<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.0.0/polyfill.min.js"></script>
+		<script
+			crossorigin
+			src="https://unpkg.com/react@16/umd/react.development.js"
+		></script>
+		<script
+			crossorigin
+			src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+		></script>
+		<script type="text/babel">
+			setTimeout(function() {
+				class Message extends React.Component {
+					render() {
+						return (
+							<p>Clique no botão para incrementar o contador</p>
+						)
+					}
+				}
+
+				class Counter extends React.Component {
+					state = {
+						counter: 0
+					}
+
+					handleClick = () => {
+						this.setState(prevState => ({
+							counter: this.state.counter + 5
+						}))
+					}
+					render() {
+						let { counter } = this.state
+						return (
+							<React.Fragment>
+								<p>Contador: {counter}</p>
+								<Message />
+								<button onClick={this.handleClick}>
+									Contar
+								</button>
+							</React.Fragment>
+						)
+					}
+				}
+
+				ReactDOM.render(
+					<React.Fragment>
+						<Counter />
+					</React.Fragment>,
+					document.getElementById('root')
+				)
+			}, 100)
+		</script>
+	</body>
+</html>
