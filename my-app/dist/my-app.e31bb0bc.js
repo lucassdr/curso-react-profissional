@@ -117,62 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/classnames/index.js":[function(require,module,exports) {
-var define;
-/*!
-  Copyright (c) 2017 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-
-	function classNames () {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg) && arg.length) {
-				var inner = classNames.apply(null, arg);
-				if (inner) {
-					classes.push(inner);
-				}
-			} else if (argType === 'object') {
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if (typeof module !== 'undefined' && module.exports) {
-		classNames.default = classNames;
-		module.exports = classNames;
-	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-		// register as 'classnames', consistent with npm package name
-		define('classnames', [], function () {
-			return classNames;
-		});
-	} else {
-		window.classNames = classNames;
-	}
-}());
-
-},{}],"node_modules/object-assign/index.js":[function(require,module,exports) {
+})({"node_modules/object-assign/index.js":[function(require,module,exports) {
 /*
 object-assign
 (c) Sindre Sorhus
@@ -31958,48 +31903,464 @@ function v1(options, buf, offset) {
 
 module.exports = v1;
 
-},{"./lib/rng":"node_modules/uuid/lib/rng-browser.js","./lib/bytesToUuid":"node_modules/uuid/lib/bytesToUuid.js"}],"node_modules/uuid/v4.js":[function(require,module,exports) {
-var rng = require('./lib/rng');
-var bytesToUuid = require('./lib/bytesToUuid');
+},{"./lib/rng":"node_modules/uuid/lib/rng-browser.js","./lib/bytesToUuid":"node_modules/uuid/lib/bytesToUuid.js"}],"NewNote.js":[function(require,module,exports) {
+"use strict";
 
-function v4(options, buf, offset) {
-  var i = buf && offset || 0;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 
-  if (typeof(options) == 'string') {
-    buf = options === 'binary' ? new Array(16) : null;
-    options = null;
-  }
-  options = options || {};
+var _react = _interopRequireDefault(require("react"));
 
-  var rnds = options.random || (options.rng || rng)();
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-  // Copy bytes to buffer, if provided
-  if (buf) {
-    for (var ii = 0; ii < 16; ++ii) {
-      buf[i + ii] = rnds[ii];
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var NewNote =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(NewNote, _React$Component);
+
+  function NewNote() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    var _temp;
+
+    _classCallCheck(this, NewNote);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
+
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(NewNote)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+      text: ''
+    }, _temp));
   }
 
-  return buf || bytesToUuid(rnds);
-}
+  _createClass(NewNote, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
 
-module.exports = v4;
+      var onAddNote = this.props.onAddNote;
+      var text = this.state.text;
+      return _react.default.createElement("div", {
+        className: 'new-note'
+      }, _react.default.createElement("input", {
+        type: "text",
+        className: 'new-note__input',
+        placeholder: 'Digite sua nota aqui...',
+        value: text,
+        onChange: function onChange(event) {
+          _this2.setState({
+            text: event.target.value
+          });
+        },
+        onKeyPress: function onKeyPress(event) {
+          if (event.key === 'Enter') {
+            onAddNote(event.target.value);
 
-},{"./lib/rng":"node_modules/uuid/lib/rng-browser.js","./lib/bytesToUuid":"node_modules/uuid/lib/bytesToUuid.js"}],"node_modules/uuid/index.js":[function(require,module,exports) {
-var v1 = require('./v1');
-var v4 = require('./v4');
+            _this2.setState({
+              text: ''
+            });
+          }
+        }
+      }));
+    }
+  }]);
 
-var uuid = v4;
-uuid.v1 = v1;
-uuid.v4 = v4;
+  return NewNote;
+}(_react.default.Component);
 
-module.exports = uuid;
+var _default = NewNote;
+exports.default = _default;
+},{"react":"node_modules/react/index.js"}],"node_modules/classnames/index.js":[function(require,module,exports) {
+var define;
+/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
 
-},{"./v1":"node_modules/uuid/v1.js","./v4":"node_modules/uuid/v4.js"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+		// register as 'classnames', consistent with npm package name
+		define('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+},{}],"Note.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Note =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Note, _React$Component);
+
+  function Note() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    var _temp;
+
+    _classCallCheck(this, Note);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Note)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+      isEditing: false
+    }, _this.handleEdit = function () {
+      _this.setState({
+        isEditing: true
+      });
+    }, _this.handleCancel = function () {
+      _this.setState({
+        isEditing: false
+      });
+    }, _this.handleSave = function () {
+      _this.props.onEdit(_this.props.note.id, _this.input.value);
+
+      _this.setState({
+        isEditing: false
+      });
+    }, _temp));
+  }
+
+  _createClass(Note, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$props = this.props,
+          note = _this$props.note,
+          onEdit = _this$props.onEdit,
+          onDelete = _this$props.onDelete,
+          onMove = _this$props.onMove,
+          index = _this$props.index,
+          total = _this$props.total;
+      var isEditing = this.state.isEditing;
+      return _react.default.createElement("div", {
+        className: "note"
+      }, isEditing ? _react.default.createElement("input", {
+        type: "text",
+        className: "note__input",
+        defaultValue: note.text,
+        ref: function ref(c) {
+          return _this2.input = c;
+        }
+      }) : _react.default.createElement("span", {
+        className: "note__text"
+      }, note.text), isEditing ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
+        className: (0, _classnames.default)('note__button', 'note__button--cancel'),
+        onClick: function onClick() {
+          _this2.handleCancel();
+        }
+      }, _react.default.createElement("i", {
+        className: "material-icons"
+      }, "cancel")), _react.default.createElement("button", {
+        className: (0, _classnames.default)('note__button', 'note__button--done'),
+        onClick: function onClick() {
+          _this2.handleSave();
+        }
+      }, _react.default.createElement("i", {
+        className: 'material-icons'
+      }, "done"))) : _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
+        className: (0, _classnames.default)('note__button', 'note__button--edit'),
+        onClick: this.handleEdit
+      }, _react.default.createElement("i", {
+        className: "material-icons"
+      }, "edit")), _react.default.createElement("button", {
+        className: (0, _classnames.default)('note__button', 'note__button--delete'),
+        onClick: function onClick() {
+          return onDelete(note);
+        }
+      }, _react.default.createElement("i", {
+        className: "material-icons"
+      }, "delete")), _react.default.createElement("button", {
+        className: (0, _classnames.default)('note__button', {
+          'note__button--hiden': index == 0
+        }),
+        onClick: function onClick() {
+          return onMove('up', index);
+        }
+      }, _react.default.createElement("i", {
+        className: "material-icons"
+      }, "arrow_upward")), _react.default.createElement("button", {
+        className: (0, _classnames.default)('note__button', {
+          'note__button--hiden': index == total - 1
+        }),
+        onClick: function onClick() {
+          return onMove('down', index);
+        }
+      }, _react.default.createElement("i", {
+        className: "material-icons"
+      }, "arrow_downward"))));
+    }
+  }]);
+
+  return Note;
+}(_react.default.Component);
+
+var _default = Note;
+exports.default = _default;
+},{"classnames":"node_modules/classnames/index.js","react":"node_modules/react/index.js"}],"NoteList.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Note = _interopRequireDefault(require("./Note"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NoteList = function NoteList(_ref) {
+  var notes = _ref.notes,
+      onMove = _ref.onMove,
+      onDelete = _ref.onDelete,
+      onEdit = _ref.onEdit;
+  return _react.default.createElement("div", {
+    className: "note-list"
+  }, notes.map(function (note, index) {
+    return _react.default.createElement(_Note.default, {
+      key: note.id,
+      note: note,
+      onEdit: onEdit,
+      onDelete: onDelete,
+      onMove: onMove,
+      index: index,
+      total: notes.length
+    });
+  }));
+};
+
+var _default = NoteList;
+exports.default = _default;
+},{"react":"node_modules/react/index.js","./Note":"Note.js"}],"App.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _v = _interopRequireDefault(require("uuid/v1"));
+
+var _NewNote = _interopRequireDefault(require("./NewNote"));
+
+var _NoteList = _interopRequireDefault(require("./NoteList"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    var _temp;
+
+    _classCallCheck(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+      notes: []
+    }, _this.handleAddNote = function (text) {
+      _this.setState(function (prevState) {
+        return {
+          notes: prevState.notes.concat({
+            id: (0, _v.default)(),
+            text: text
+          })
+        };
+      });
+    }, _this.handleMove = function (direction, index) {
+      _this.setState(function (prevState) {
+        var newNotes = prevState.notes.slice();
+        var removedNote = newNotes.splice(index, 1)[0];
+
+        if (direction === 'up') {
+          newNotes.splice(index - 1, 0, removedNote);
+        } else if (direction === 'down') {
+          newNotes.splice(index + 1, 0, removedNote);
+        }
+
+        return {
+          notes: newNotes
+        };
+      });
+    }, _this.handleDelete = function (note) {
+      var confirmDelete = confirm("Voc\xEA deseja remover a nota \"".concat(note.text, "\"?"));
+
+      if (confirmDelete) {
+        _this.setState(function (prevState) {
+          var newNotes = prevState.notes.slice();
+          var index = newNotes.findIndex(function (note) {
+            return note.id === note.id;
+          });
+          newNotes.splice(index, 1)[0];
+          return {
+            notes: newNotes
+          };
+        });
+      }
+    }, _this.handleEdit = function (id, text) {
+      _this.setState(function (prevState) {
+        var newNotes = prevState.notes.slice();
+        var index = newNotes.findIndex(function (note) {
+          return note.id === id;
+        });
+        newNotes[index].text = text;
+        return {
+          notes: newNotes
+        };
+      });
+    }, _temp));
+  }
+
+  _createClass(App, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement(_NewNote.default, {
+        onAddNote: this.handleAddNote
+      }), _react.default.createElement(_NoteList.default, {
+        notes: this.state.notes,
+        onMove: this.handleMove,
+        onDelete: this.handleDelete,
+        onEdit: this.handleEdit
+      }));
+    }
+  }]);
+
+  return App;
+}(_react.default.Component);
+
+var _default = App;
+exports.default = _default;
+},{"react":"node_modules/react/index.js","uuid/v1":"node_modules/uuid/v1.js","./NewNote":"NewNote.js","./NoteList":"NoteList.js"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -32074,320 +32435,18 @@ module.hot.accept(reloadCSS);
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
-var _classnames = _interopRequireDefault(require("classnames"));
-
 var _react = _interopRequireDefault(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
-var _uuid = _interopRequireDefault(require("uuid"));
+var _App = _interopRequireDefault(require("./App"));
 
 require("./index.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var App =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(App, _React$Component);
-
-  function App() {
-    var _getPrototypeOf2;
-
-    var _this;
-
-    var _temp;
-
-    _classCallCheck(this, App);
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
-      notes: []
-    }, _this.handleAddNote = function (text) {
-      _this.setState(function (prevState) {
-        return {
-          notes: prevState.notes.concat({
-            id: (0, _uuid.default)(),
-            text: text
-          })
-        };
-      });
-    }, _this.handleMove = function (direction, index) {
-      _this.setState(function (prevState) {
-        var newNotes = prevState.notes.slice();
-        var removedNote = newNotes.splice(index, 1)[0];
-
-        if (direction === 'up') {
-          newNotes.splice(index - 1, 0, removedNote);
-        } else if (direction === 'down') {
-          newNotes.splice(index + 1, 0, removedNote);
-        }
-
-        return {
-          notes: newNotes
-        };
-      });
-    }, _this.handleDelete = function (note) {
-      var confirmDelete = confirm("Voc\xEA deseja remover a nota \"".concat(note.text, "\"?"));
-
-      if (confirmDelete) {
-        _this.setState(function (prevState) {
-          var newNotes = prevState.notes.slice();
-          var index = newNotes.findIndex(function (note) {
-            return note.id === note.id;
-          });
-          newNotes.splice(index, 1)[0];
-          return {
-            notes: newNotes
-          };
-        });
-      }
-    }, _this.handleEdit = function (id, text) {
-      _this.setState(function (prevState) {
-        var newNotes = prevState.notes.slice();
-        var index = newNotes.findIndex(function (note) {
-          return note.id === id;
-        });
-        newNotes[index].text = text;
-        return {
-          notes: newNotes
-        };
-      });
-    }, _temp));
-  }
-
-  _createClass(App, [{
-    key: "render",
-    value: function render() {
-      return _react.default.createElement("div", {
-        className: "container"
-      }, _react.default.createElement(NewNote, {
-        onAddNote: this.handleAddNote
-      }), _react.default.createElement(NoteList, {
-        notes: this.state.notes,
-        onMove: this.handleMove,
-        onDelete: this.handleDelete,
-        onEdit: this.handleEdit
-      }));
-    }
-  }]);
-
-  return App;
-}(_react.default.Component);
-
-var NewNote =
-/*#__PURE__*/
-function (_React$Component2) {
-  _inherits(NewNote, _React$Component2);
-
-  function NewNote() {
-    var _getPrototypeOf3;
-
-    var _this2;
-
-    var _temp2;
-
-    _classCallCheck(this, NewNote);
-
-    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
-    }
-
-    return _possibleConstructorReturn(_this2, (_temp2 = _this2 = _possibleConstructorReturn(this, (_getPrototypeOf3 = _getPrototypeOf(NewNote)).call.apply(_getPrototypeOf3, [this].concat(args))), _this2.state = {
-      text: ''
-    }, _temp2));
-  }
-
-  _createClass(NewNote, [{
-    key: "render",
-    value: function render() {
-      var _this3 = this;
-
-      var onAddNote = this.props.onAddNote;
-      var text = this.state.text;
-      return _react.default.createElement("div", {
-        className: 'new-note'
-      }, _react.default.createElement("input", {
-        type: "text",
-        className: 'new-note__input',
-        placeholder: 'Digite sua nota aqui...',
-        value: text,
-        onChange: function onChange(event) {
-          _this3.setState({
-            text: event.target.value
-          });
-        },
-        onKeyPress: function onKeyPress(event) {
-          if (event.key === 'Enter') {
-            onAddNote(event.target.value);
-
-            _this3.setState({
-              text: ''
-            });
-          }
-        }
-      }));
-    }
-  }]);
-
-  return NewNote;
-}(_react.default.Component);
-
-var Note =
-/*#__PURE__*/
-function (_React$Component3) {
-  _inherits(Note, _React$Component3);
-
-  function Note() {
-    var _getPrototypeOf4;
-
-    var _this4;
-
-    var _temp3;
-
-    _classCallCheck(this, Note);
-
-    for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      args[_key3] = arguments[_key3];
-    }
-
-    return _possibleConstructorReturn(_this4, (_temp3 = _this4 = _possibleConstructorReturn(this, (_getPrototypeOf4 = _getPrototypeOf(Note)).call.apply(_getPrototypeOf4, [this].concat(args))), _this4.state = {
-      isEditing: false
-    }, _this4.handleEdit = function () {
-      _this4.setState({
-        isEditing: true
-      });
-    }, _this4.handleCancel = function () {
-      _this4.setState({
-        isEditing: false
-      });
-    }, _this4.handleSave = function () {
-      _this4.props.onEdit(_this4.props.note.id, _this4.input.value);
-
-      _this4.setState({
-        isEditing: false
-      });
-    }, _temp3));
-  }
-
-  _createClass(Note, [{
-    key: "render",
-    value: function render() {
-      var _this5 = this;
-
-      var _this$props = this.props,
-          note = _this$props.note,
-          onEdit = _this$props.onEdit,
-          onDelete = _this$props.onDelete,
-          onMove = _this$props.onMove,
-          index = _this$props.index,
-          total = _this$props.total;
-      var isEditing = this.state.isEditing;
-      return _react.default.createElement("div", {
-        className: "note"
-      }, isEditing ? _react.default.createElement("input", {
-        type: "text",
-        className: "note__input",
-        defaultValue: note.text,
-        ref: function ref(c) {
-          return _this5.input = c;
-        }
-      }) : _react.default.createElement("span", {
-        className: "note__text"
-      }, note.text), isEditing ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
-        className: (0, _classnames.default)('note__button', 'note__button--cancel'),
-        onClick: function onClick() {
-          _this5.handleCancel();
-        }
-      }, _react.default.createElement("i", {
-        className: "material-icons"
-      }, "cancel")), _react.default.createElement("button", {
-        className: (0, _classnames.default)('note__button', 'note__button--done'),
-        onClick: function onClick() {
-          _this5.handleSave();
-        }
-      }, _react.default.createElement("i", {
-        className: 'material-icons'
-      }, "done"))) : _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
-        className: (0, _classnames.default)('note__button', 'note__button--edit'),
-        onClick: this.handleEdit
-      }, _react.default.createElement("i", {
-        className: "material-icons"
-      }, "edit")), _react.default.createElement("button", {
-        className: (0, _classnames.default)('note__button', 'note__button--delete'),
-        onClick: function onClick() {
-          return onDelete(note);
-        }
-      }, _react.default.createElement("i", {
-        className: "material-icons"
-      }, "delete")), _react.default.createElement("button", {
-        className: (0, _classnames.default)('note__button', {
-          'note__button--hiden': index == 0
-        }),
-        onClick: function onClick() {
-          return onMove('up', index);
-        }
-      }, _react.default.createElement("i", {
-        className: "material-icons"
-      }, "arrow_upward")), _react.default.createElement("button", {
-        className: (0, _classnames.default)('note__button', {
-          'note__button--hiden': index == total - 1
-        }),
-        onClick: function onClick() {
-          return onMove('down', index);
-        }
-      }, _react.default.createElement("i", {
-        className: "material-icons"
-      }, "arrow_downward"))));
-    }
-  }]);
-
-  return Note;
-}(_react.default.Component);
-
-var NoteList = function NoteList(_ref) {
-  var notes = _ref.notes,
-      onMove = _ref.onMove,
-      onDelete = _ref.onDelete,
-      onEdit = _ref.onEdit;
-  return _react.default.createElement("div", {
-    className: "note-list"
-  }, notes.map(function (note, index) {
-    return _react.default.createElement(Note, {
-      key: note.id,
-      note: note,
-      onEdit: onEdit,
-      onDelete: onDelete,
-      onMove: onMove,
-      index: index,
-      total: notes.length
-    });
-  }));
-};
-
-_reactDom.default.render(_react.default.createElement(App, null), document.getElementById('root'));
-},{"classnames":"node_modules/classnames/index.js","react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","uuid":"node_modules/uuid/index.js","./index.scss":"index.scss"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+_reactDom.default.render(_react.default.createElement(_App.default, null), document.getElementById('root'));
+},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","./App":"App.js","./index.scss":"index.scss"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -32415,7 +32474,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61059" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56938" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
