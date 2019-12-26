@@ -31916,17 +31916,16 @@ var _react = _interopRequireDefault(require("react"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AppBar = function AppBar(_ref) {
-  var onReload = _ref.onReload,
-      onSave = _ref.onSave;
+  var onSave = _ref.onSave,
+      isLoading = _ref.isLoading;
   return _react.default.createElement("div", {
     className: 'app-bar'
   }, _react.default.createElement("div", {
     className: 'app-bar__container'
   }, _react.default.createElement("span", {
     className: "app-bar__brand"
-  }, "simple note.js"), _react.default.createElement("button", {
-    className: "app-bar__action",
-    onClick: onReload
+  }, "simple note.js"), isLoading ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
+    className: "app-bar__action app-bar__action--rotation"
   }, _react.default.createElement("i", {
     className: "material-icons"
   }, "refresh")), _react.default.createElement("button", {
@@ -31934,7 +31933,7 @@ var AppBar = function AppBar(_ref) {
     onClick: onSave
   }, _react.default.createElement("i", {
     className: "material-icons"
-  }, "save"))));
+  }, "save"))) : ''));
 };
 
 var _default = AppBar;
@@ -32323,7 +32322,8 @@ function (_React$Component) {
     }
 
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
-      notes: []
+      notes: [],
+      isLoading: false
     }, _this.handleAddNote = function (text) {
       _this.setState(function (prevState) {
         return {
@@ -32375,11 +32375,17 @@ function (_React$Component) {
         };
       });
     }, _this.handleReload = function () {
-      var notes = window.localStorage.getItem('notes');
-
       _this.setState({
-        notes: JSON.parse(notes)
+        isLoading: true
       });
+
+      var notes = window.localStorage.getItem('notes');
+      setTimeout(function () {
+        _this.setState({
+          notes: JSON.parse(notes),
+          isLoading: false
+        });
+      }, 3000);
     }, _this.handleSave = function () {
       var notes = _this.state.notes;
       window.localStorage.setItem('notes', JSON.stringify(notes));
@@ -32387,11 +32393,17 @@ function (_React$Component) {
   }
 
   _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.handleReload();
+    }
+  }, {
     key: "render",
     value: function render() {
+      var isLoading = this.state.isLoading;
       return _react.default.createElement("div", null, _react.default.createElement(_AppBar.default, {
-        onReload: this.handleReload,
-        onSave: this.handleSave
+        onSave: this.handleSave,
+        isLoading: isLoading
       }), _react.default.createElement("div", {
         className: "container"
       }, _react.default.createElement(_NewNote.default, {

@@ -1,5 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Courgette&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap");
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
 body {
   background-color: #ffffff;
   margin: 0;
@@ -39,6 +47,9 @@ body {
 .app-bar__action:hover {
   color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
+}
+.app-bar__action--rotation {
+  animation: rotation 2s infinite linear;
 }
 
 .container {

@@ -6,7 +6,12 @@ import NoteList from './NoteList'
 
 class App extends React.Component {
 	state = {
-		notes: []
+		notes: [],
+		isLoading: false
+	}
+
+	componentDidMount() {
+		this.handleReload()
 	}
 
 	handleAddNote = text => {
@@ -65,8 +70,11 @@ class App extends React.Component {
 	}
 
 	handleReload = () => {
+		this.setState({ isLoading: true })
 		const notes = window.localStorage.getItem('notes')
-		this.setState({ notes: JSON.parse(notes) })
+		setTimeout(() => {
+			this.setState({ notes: JSON.parse(notes), isLoading: false })
+		}, 3000)
 	}
 
 	handleSave = () => {
@@ -75,9 +83,10 @@ class App extends React.Component {
 	}
 
 	render() {
+		let { isLoading } = this.state
 		return (
 			<div>
-				<AppBar onReload={this.handleReload} onSave={this.handleSave} />
+				<AppBar onSave={this.handleSave} isLoading={isLoading} />
 				<div className='container'>
 					<NewNote onAddNote={this.handleAddNote} />
 					<NoteList

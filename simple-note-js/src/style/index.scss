@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Courgette&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
+@import './mixin.scss';
 
 $app-padding: 20px;
 $container-max-width: 600px;
@@ -46,6 +47,10 @@ body {
 		&:hover {
 			color: rgba(0, 0, 0, 0.5);
 			cursor: pointer;
+		}
+
+		&--rotation {
+			@include rotation();
 		}
 	}
 }
