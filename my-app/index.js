@@ -40,8 +40,6 @@ class App extends React.Component {
 			`Você deseja remover a nota "${note.text}"?`
 		)
 		if (confirmDelete) {
-			console.log('IF', confirmDelete)
-
 			this.setState(prevState => {
 				const newNotes = prevState.notes.slice()
 				const index = newNotes.findIndex(note => note.id === note.id)

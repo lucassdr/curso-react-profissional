@@ -32152,8 +32152,6 @@ function (_React$Component) {
       var confirmDelete = confirm("Voc\xEA deseja remover a nota \"".concat(note.text, "\"?"));
 
       if (confirmDelete) {
-        console.log('IF', confirmDelete);
-
         _this.setState(function (prevState) {
           var newNotes = prevState.notes.slice();
           var index = newNotes.findIndex(function (note) {
