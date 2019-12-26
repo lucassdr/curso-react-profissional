@@ -31903,7 +31903,69 @@ function v1(options, buf, offset) {
 
 module.exports = v1;
 
-},{"./lib/rng":"../node_modules/uuid/lib/rng-browser.js","./lib/bytesToUuid":"../node_modules/uuid/lib/bytesToUuid.js"}],"components/AppBar.js":[function(require,module,exports) {
+},{"./lib/rng":"../node_modules/uuid/lib/rng-browser.js","./lib/bytesToUuid":"../node_modules/uuid/lib/bytesToUuid.js"}],"services/NotesServices.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+// teste
+var failedLoadAttemps = 2;
+var failedSaveAttemps = 2; // teste
+
+var NoteServices =
+/*#__PURE__*/
+function () {
+  function NoteServices() {
+    _classCallCheck(this, NoteServices);
+  }
+
+  _createClass(NoteServices, null, [{
+    key: "load",
+    value: function load() {
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          if (failedLoadAttemps > 1) {
+            var notes = window.localStorage.getItem('notes');
+            resolve(JSON.parse(notes));
+          } else {
+            reject();
+            failedLoadAttemps++;
+          }
+        }, 2000);
+      });
+    }
+  }, {
+    key: "save",
+    value: function save(notes) {
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          if (failedSaveAttemps > 1) {
+            window.localStorage.setItem('notes', JSON.stringify(notes));
+            resolve();
+          } else {
+            reject();
+            failedSaveAttemps;
+          }
+        }, 2000);
+      });
+    }
+  }]);
+
+  return NoteServices;
+}();
+
+var _default = NoteServices;
+exports.default = _default;
+},{}],"components/AppBar.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -31916,21 +31978,52 @@ var _react = _interopRequireDefault(require("react"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AppBar = function AppBar(_ref) {
-  var isLoading = _ref.isLoading;
+  var isLoading = _ref.isLoading,
+      saveHasError = _ref.saveHasError,
+      onSaveRetry = _ref.onSaveRetry;
   return _react.default.createElement("div", {
     className: 'app-bar'
   }, _react.default.createElement("div", {
     className: 'app-bar__container'
   }, _react.default.createElement("span", {
     className: "app-bar__brand"
-  }, "simple note.js"), isLoading ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
+  }, "simple note.js"), isLoading && _react.default.createElement("button", {
     className: "app-bar__action app-bar__action--rotation"
   }, _react.default.createElement("i", {
     className: "material-icons"
-  }, "refresh"))) : ''));
+  }, "refresh")), saveHasError && _react.default.createElement("button", {
+    className: "app-bar__action app-bar__action--danger",
+    onClick: onSaveRetry
+  }, _react.default.createElement("i", {
+    className: "material-icons"
+  }, "cloud_off"))));
 };
 
 var _default = AppBar;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"components/Error.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Error = function Error(_ref) {
+  var onRetry = _ref.onRetry;
+  return _react.default.createElement("div", {
+    className: "error"
+  }, _react.default.createElement("h1", null, "Ops!"), _react.default.createElement("p", null, "Ocorreu um erro inesperado ao carregar as notas."), _react.default.createElement("button", {
+    className: "error__button",
+    onClick: onRetry
+  }, "Tentar novamente"));
+};
+
+var _default = Error;
 exports.default = _default;
 },{"react":"../node_modules/react/index.js"}],"components/NewNote.js":[function(require,module,exports) {
 "use strict";
@@ -32271,7 +32364,11 @@ var _react = _interopRequireDefault(require("react"));
 
 var _v = _interopRequireDefault(require("uuid/v1"));
 
+var _NotesServices = _interopRequireDefault(require("../services/NotesServices"));
+
 var _AppBar = _interopRequireDefault(require("./AppBar"));
+
+var _Error = _interopRequireDefault(require("./Error"));
 
 var _NewNote = _interopRequireDefault(require("./NewNote"));
 
@@ -32317,7 +32414,9 @@ function (_React$Component) {
 
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
       notes: [],
-      isLoading: false
+      isLoading: false,
+      reloadHasError: false,
+      saveHasError: false
     }, _this.handleAddNote = function (text) {
       _this.setState(function (prevState) {
         var notes = prevState.notes.concat({
@@ -32382,28 +32481,37 @@ function (_React$Component) {
       });
     }, _this.handleReload = function () {
       _this.setState({
-        isLoading: true
+        isLoading: true,
+        reloadHasError: false
       });
 
-      var notes = window.localStorage.getItem('notes');
-      setTimeout(function () {
+      _NotesServices.default.load().then(function (notes) {
         _this.setState({
-          notes: JSON.parse(notes),
+          notes: notes,
           isLoading: false
         });
-      }, 3000);
+      }).catch(function () {
+        _this.setState({
+          isLoading: false,
+          reloadHasError: true
+        });
+      });
     }, _this.handleSave = function (notes) {
       _this.setState({
-        isLoading: true
+        isLoading: true,
+        saveHasError: false
       });
 
-      setTimeout(function () {
-        window.localStorage.setItem('notes', JSON.stringify(notes));
-
+      _NotesServices.default.save(notes).then(function () {
         _this.setState({
           isLoading: false
         });
-      }, 3000);
+      }).catch(function () {
+        _this.setState({
+          isLoading: false,
+          saveHasError: true
+        });
+      });
     }, _temp));
   }
 
@@ -32415,19 +32523,31 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var isLoading = this.state.isLoading;
+      var _this2 = this;
+
+      var _this$state = this.state,
+          notes = _this$state.notes,
+          isLoading = _this$state.isLoading,
+          reloadHasError = _this$state.reloadHasError,
+          saveHasError = _this$state.saveHasError;
       return _react.default.createElement("div", null, _react.default.createElement(_AppBar.default, {
-        isLoading: isLoading
+        isLoading: isLoading,
+        saveHasError: saveHasError,
+        onSaveRetry: function onSaveRetry() {
+          return _this2.handleSave(notes);
+        }
       }), _react.default.createElement("div", {
         className: "container"
-      }, _react.default.createElement(_NewNote.default, {
+      }, reloadHasError ? _react.default.createElement(_Error.default, {
+        onRetry: this.handleReload
+      }) : _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_NewNote.default, {
         onAddNote: this.handleAddNote
       }), _react.default.createElement(_NoteList.default, {
-        notes: this.state.notes,
+        notes: notes,
         onMove: this.handleMove,
         onDelete: this.handleDelete,
         onEdit: this.handleEdit
-      })));
+      }))));
     }
   }]);
 
@@ -32436,7 +32556,7 @@ function (_React$Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","uuid/v1":"../node_modules/uuid/v1.js","./AppBar":"components/AppBar.js","./NewNote":"components/NewNote.js","./NoteList":"components/NoteList.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","uuid/v1":"../node_modules/uuid/v1.js","../services/NotesServices":"services/NotesServices.js","./AppBar":"components/AppBar.js","./Error":"components/Error.js","./NewNote":"components/NewNote.js","./NoteList":"components/NoteList.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
