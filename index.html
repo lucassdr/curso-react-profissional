@@ -19,19 +19,27 @@
 		></script>
 		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 		<script type="text/babel">
-			function MyComponentFunction() {
-				return <p>Meu componente</p>
-			}
-
 			class MyComponentClass extends React.Component {
+				state = {
+					counter: 0
+				}
+
+				handleClick = () => {
+					this.setState({ counter: 1 })
+				}
+
 				render() {
-					return <p>Meu segundo componente</p>
+					return (
+						<div>
+							<p>Contador: {this.state.counter}</p>
+							<button onClick={this.handleClick}>Contar</button>
+						</div>
+					)
 				}
 			}
 
 			ReactDOM.render(
 				<>
-					<MyComponentFunction />
 					<MyComponentClass />
 				</>,
 				document.getElementById('root2')
