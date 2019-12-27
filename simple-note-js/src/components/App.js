@@ -1,11 +1,11 @@
 import React from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import uuid from 'uuid/v1'
 import NoteService from '../services/NotesServices'
+import About from './About'
 import AppBar from './AppBar'
-import Error from './Error'
 import NavigationDrawer from './NavigationDrawer'
-import NewNote from './NewNote'
-import NoteList from './NoteList'
+import Notes from './Notes'
 
 class App extends React.Component {
 	state = {
@@ -120,33 +120,26 @@ class App extends React.Component {
 			isMenuOpen
 		} = this.state
 		return (
-			<div>
-				<AppBar
-					isLoading={isLoading}
-					saveHasError={saveHasError}
-					onSaveRetry={() => this.handleSave(notes)}
-					openMenu={this.handleOpenMenu}
-				/>
-				<div className='container'>
-					{reloadHasError ? (
-						<Error onRetry={this.handleReload} />
-					) : (
+			<Router>
+				<div>
+					<AppBar
+						isLoading={isLoading}
+						saveHasError={saveHasError}
+						onSaveRetry={() => this.handleSave(notes)}
+						openMenu={this.handleOpenMenu}
+					/>
+					<div className='container'>
 						<React.Fragment>
-							<NewNote onAddNote={this.handleAddNote} />
-							<NoteList
-								notes={notes}
-								onMove={this.handleMove}
-								onDelete={this.handleDelete}
-								onEdit={this.handleEdit}
-							/>
+							<Route path={'/'} exact component={Notes} />
+							<Route path={'/about'} exact component={About} />
 						</React.Fragment>
-					)}
+					</div>
+					<NavigationDrawer
+						isOpen={isMenuOpen}
+						onCloseMenu={this.handleCloseMenu}
+					/>
 				</div>
-				<NavigationDrawer
-					isOpen={isMenuOpen}
-					onCloseMenu={this.handleCloseMenu}
-				/>
-			</div>
+			</Router>
 		)
 	}
 }
