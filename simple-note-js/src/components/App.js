@@ -18,6 +18,10 @@ class App extends React.Component {
 		this.handleReload()
 	}
 
+	componentDidCatch() {
+		this.setState({ reloadHasError: true })
+	}
+
 	handleAddNote = text => {
 		this.setState(prevState => {
 			const notes = prevState.notes.concat({ id: uuid(), text })

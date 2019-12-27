@@ -8,7 +8,7 @@ class NoteServices {
 			setTimeout(() => {
 				if (failedLoadAttemps > 1) {
 					const notes = window.localStorage.getItem('notes')
-					resolve(JSON.parse(notes))
+					resolve(notes ? JSON.parse(notes) : [])
 				} else {
 					reject()
 					failedLoadAttemps++
