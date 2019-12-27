@@ -6,6 +6,10 @@ class TheoryClass extends React.Component {
 		isEditing: false
 	}
 
+	handleStudentsInTheoryClass = () => {
+		history.push('/students')
+	}
+
 	handleEdit = () => {
 		this.setState({ isEditing: true })
 	}
@@ -20,7 +24,7 @@ class TheoryClass extends React.Component {
 	}
 
 	render() {
-		const { theoryClass, onDelete } = this.props
+		const { theoryClass, onDelete, history } = this.props
 		let { isEditing } = this.state
 		return (
 			<div className='student'>
@@ -32,7 +36,12 @@ class TheoryClass extends React.Component {
 						ref={c => (this.input = c)}
 					/>
 				) : (
-					<span className='student__name'>{theoryClass.name}</span>
+					<React.Fragment>
+						<span className='student__name'>
+							{theoryClass.name}
+						</span>
+						<span>{new Date().getMilliseconds()}</span>
+					</React.Fragment>
 				)}
 				{isEditing ? (
 					<React.Fragment>
@@ -59,6 +68,15 @@ class TheoryClass extends React.Component {
 					</React.Fragment>
 				) : (
 					<React.Fragment>
+						<button
+							className={classNames(
+								'student__button',
+								'student__button--edit'
+							)}
+							// onClick={ () => history.push( '/students' ) }
+						>
+							<i className='material-icons'>group</i>
+						</button>
 						<button
 							className={classNames(
 								'student__button',

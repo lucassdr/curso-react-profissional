@@ -27,17 +27,17 @@ const NavigationDrawer = ({ isOpen, onCloseMenu, history }) => (
 				className='navigation-drawer__menu__item'
 				onClick={() => {
 					onCloseMenu()
-					history.push('/students')
+					history.push('/theoryclass')
 				}}>
-				<i className='material-icons'>group_work</i>Estudantes
+				<i className='material-icons'>class</i>Aula Teórica
 			</button>
 			<button
 				className='navigation-drawer__menu__item'
 				onClick={() => {
 					onCloseMenu()
-					history.push('/theoryclass')
+					history.push('/students')
 				}}>
-				<i className='material-icons'>class</i>Aula Teórica
+				<i className='material-icons'>group_work</i>Estudantes
 			</button>
 			<button
 				className='navigation-drawer__menu__item'
