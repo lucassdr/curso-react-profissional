@@ -1,10 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import uuid from 'uuid/v1'
+import AppBar from '../components/AppBar'
+import NavigationDrawer from '../components/NavigationDrawer'
 import NoteService from '../services/NotesServices'
 import About from './About'
-import AppBar from './AppBar'
-import NavigationDrawer from './NavigationDrawer'
 import Notes from './Notes'
 
 class App extends React.Component {
@@ -130,7 +130,21 @@ class App extends React.Component {
 					/>
 					<div className='container'>
 						<React.Fragment>
-							<Route path={'/'} exact component={Notes} />
+							<Route
+								path={'/'}
+								exact
+								render={props => (
+									<Notes
+										notes={notes}
+										reloadHasError={reloadHasError}
+										onRetry={this.handleReload}
+										onAddNote={this.handleAddNote}
+										onMove={this.handleMove}
+										onDelete={this.handleDelete}
+										onEdit={this.handleEdit}
+									/>
+								)}
+							/>
 							<Route path={'/about'} exact component={About} />
 						</React.Fragment>
 					</div>
