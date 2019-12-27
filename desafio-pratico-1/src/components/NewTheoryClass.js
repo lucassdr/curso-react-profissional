@@ -1,6 +1,6 @@
 import React from 'react'
 
-class NewStudent extends React.Component {
+class NewTheoryClass extends React.Component {
 	state = {
 		name: ''
 	}
@@ -12,7 +12,7 @@ class NewStudent extends React.Component {
 				<input
 					type='name'
 					className={'new-student__input'}
-					placeholder={'Digite aqui o nome do aluno...'}
+					placeholder={'Digite aqui o nome da turma...'}
 					value={name}
 					onChange={event => {
 						this.setState({ name: event.target.value })
@@ -28,4 +28,4 @@ class NewStudent extends React.Component {
 		)
 	}
 }
-export default NewStudent
+export default NewTheoryClass

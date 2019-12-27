@@ -4,14 +4,16 @@ import uuid from 'uuid/v1'
 import AppBar from '../components/AppBar'
 import NavigationDrawer from '../components/NavigationDrawer'
 import StudentService from '../services/StudentServices'
+import TheoryClassService from '../services/TheoryClassServices'
 import About from './About'
 import Home from './Home'
 import Students from './Students'
-import TheoryClass from './TheoryClass'
+import TheoryClasses from './TheoryClasses'
 
 class App extends React.Component {
 	state = {
 		students: [],
+		theoryClass: [],
 		isLoading: false,
 		isMenuOpen: false,
 		reloadHasError: false,
@@ -20,6 +22,7 @@ class App extends React.Component {
 
 	componentDidMount() {
 		this.handleReload()
+		this.handleReloadTheoryClass()
 	}
 
 	componentDidCatch() {
@@ -31,6 +34,17 @@ class App extends React.Component {
 			const students = prevState.students.concat({ id: uuid(), name })
 			this.handleSave(students)
 			return { students }
+		})
+	}
+
+	handleAddTheoryClass = name => {
+		this.setState(prevState => {
+			const theoryClass = prevState.theoryClass.concat({
+				id: uuid(),
+				name
+			})
+			this.handleSaveTheoryClass(theoryClass)
+			return { theoryClass }
 		})
 	}
 
@@ -54,6 +68,26 @@ class App extends React.Component {
 		}
 	}
 
+	handleDeleteTheoryClass = theoryClass => {
+		let confirmDelete = confirm(
+			`Você deseja remover a turma "${theoryClass.name}"?`
+		)
+		if (confirmDelete) {
+			this.setState(prevState => {
+				const newTheoryClasses = prevState.theoryClass.slice()
+				const index = newTheoryClasses.findIndex(
+					theoryClass => theoryClass.id === theoryClass.id
+				)
+				newTheoryClasses.splice(index, 1)[0]
+
+				this.handleSaveTheoryClass(newTheoryClasses)
+				return {
+					theoryClass: newTheoryClasses
+				}
+			})
+		}
+	}
+
 	handleEdit = (id, name) => {
 		this.setState(prevState => {
 			const newStudents = prevState.students.slice()
@@ -62,6 +96,20 @@ class App extends React.Component {
 			this.handleSave(newStudents)
 			return {
 				students: newStudents
+			}
+		})
+	}
+
+	handleEditTheoryClass = (id, name) => {
+		this.setState(prevState => {
+			const newTheoryClasses = prevState.theoryClass.slice()
+			const index = newTheoryClasses.findIndex(
+				theoryClass => theoryClass.id === id
+			)
+			newTheoryClasses[index].name = name
+			this.handleSaveTheoryClass(newTheoryClasses)
+			return {
+				theoryClass: newTheoryClasses
 			}
 		})
 	}
@@ -77,9 +125,31 @@ class App extends React.Component {
 			})
 	}
 
+	handleReloadTheoryClass = () => {
+		this.setState({ isLoading: true, reloadHasError: false })
+		TheoryClassService.load()
+			.then(theoryClass => {
+				this.setState({ theoryClass, isLoading: false })
+			})
+			.catch(() => {
+				this.setState({ isLoading: false, reloadHasError: true })
+			})
+	}
+
 	handleSave = students => {
 		this.setState({ isLoading: true, saveHasError: false })
 		StudentService.save(students)
+			.then(() => {
+				this.setState({ isLoading: false })
+			})
+			.catch(() => {
+				this.setState({ isLoading: false, saveHasError: true })
+			})
+	}
+
+	handleSaveTheoryClass = theoryClass => {
+		this.setState({ isLoading: true, saveHasError: false })
+		TheoryClassService.save(theoryClass)
 			.then(() => {
 				this.setState({ isLoading: false })
 			})
@@ -99,6 +169,7 @@ class App extends React.Component {
 	render() {
 		let {
 			students,
+			theoryClass,
 			isLoading,
 			reloadHasError,
 			saveHasError,
@@ -133,7 +204,18 @@ class App extends React.Component {
 							<Route
 								path={'/theoryclass'}
 								exact
-								component={TheoryClass}
+								render={props => (
+									<TheoryClasses
+										theoryClasses={theoryClass}
+										reloadHasError={reloadHasError}
+										onRetry={this.handleReloadTheoryClass}
+										onAddTheoryClass={
+											this.handleAddTheoryClass
+										}
+										onDelete={this.handleDeleteTheoryClass}
+										onEdit={this.handleEditTheoryClass}
+									/>
+								)}
 							/>
 							<Route path={'/about'} exact component={About} />
 						</React.Fragment>
