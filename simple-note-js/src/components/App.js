@@ -3,6 +3,7 @@ import uuid from 'uuid/v1'
 import NoteService from '../services/NotesServices'
 import AppBar from './AppBar'
 import Error from './Error'
+import NavigationDrawer from './NavigationDrawer'
 import NewNote from './NewNote'
 import NoteList from './NoteList'
 
@@ -10,6 +11,7 @@ class App extends React.Component {
 	state = {
 		notes: [],
 		isLoading: false,
+		isMenuOpen: false,
 		reloadHasError: false,
 		saveHasError: false
 	}
@@ -101,14 +103,29 @@ class App extends React.Component {
 			})
 	}
 
+	handleOpenMenu = () => {
+		this.setState({ isMenuOpen: true })
+	}
+
+	handleCloseMenu = () => {
+		this.setState({ isMenuOpen: false })
+	}
+
 	render() {
-		let { notes, isLoading, reloadHasError, saveHasError } = this.state
+		let {
+			notes,
+			isLoading,
+			reloadHasError,
+			saveHasError,
+			isMenuOpen
+		} = this.state
 		return (
 			<div>
 				<AppBar
 					isLoading={isLoading}
 					saveHasError={saveHasError}
 					onSaveRetry={() => this.handleSave(notes)}
+					openMenu={this.handleOpenMenu}
 				/>
 				<div className='container'>
 					{reloadHasError ? (
@@ -125,6 +142,10 @@ class App extends React.Component {
 						</React.Fragment>
 					)}
 				</div>
+				<NavigationDrawer
+					isOpen={isMenuOpen}
+					onCloseMenu={this.handleCloseMenu}
+				/>
 			</div>
 		)
 	}

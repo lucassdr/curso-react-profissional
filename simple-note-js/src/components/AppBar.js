@@ -1,8 +1,11 @@
 import React from 'react'
 
-const AppBar = ({ isLoading, saveHasError, onSaveRetry }) => (
+const AppBar = ({ isLoading, saveHasError, onSaveRetry, openMenu }) => (
 	<div className={'app-bar'}>
 		<div className={'app-bar__container'}>
+			<button className='app-bar__action' onClick={openMenu}>
+				<i className='material-icons'>menu</i>
+			</button>
 			<span className='app-bar__brand'>simple note.js</span>
 			{isLoading && (
 				<button className='app-bar__action app-bar__action--rotation'>
